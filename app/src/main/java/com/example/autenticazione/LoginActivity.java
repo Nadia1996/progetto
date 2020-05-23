@@ -118,9 +118,15 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         EditText outputView = (EditText) findViewById(R.id.et_email);
+        EditText outputView1 = (EditText) findViewById(R.id.et_password);
         CharSequence textData = outputView.getText();
+        CharSequence textData1 = outputView1.getText();
         if (textData != null) {
             editor.putString(TEXT_DATA_KEY, textData.toString());
+            editor.commit();
+        }
+        if (textData1 != null) {
+            editor.putString(TEXT_DATA_KEY, textData1.toString());
             editor.commit();
         }
     }
@@ -130,7 +136,9 @@ public class LoginActivity extends AppCompatActivity {
         String textData = prefs.getString(TEXT_DATA_KEY, "Prefs not found!");
         TextView outputView = (EditText) findViewById(R.id.et_email);
         outputView.setText(textData);
+
     }
+
 
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();

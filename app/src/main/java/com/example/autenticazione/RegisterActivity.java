@@ -11,10 +11,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +30,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,16 +51,23 @@ public class RegisterActivity extends AppCompatActivity {
     private InputStream inputStreamImg;
     private Bitmap bitmap;
     private Bitmap rotated_bitmap;
+    private Bitmap bitmap1;
+    //byte[] byteArrayImage;
 
     //Firebase
     private FirebaseAuth mAuth;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
+        Log.i(TAG, "okonstart");
     }
 
 
@@ -62,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initUI();
+        Log.i(TAG, "okoncreate");
 
         aggiungiImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +93,13 @@ public class RegisterActivity extends AppCompatActivity {
          confermaPassword = (EditText) findViewById(R.id.et_confermaPassword);
          aggiungiImmagine = (ImageView) findViewById(R.id.ivUploadImage);
 
+
+
+
+        //inizializzazione database firebase
+       //  database = FirebaseDatabase.getInstance();
+       //  myRef = database.getReference();
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 }
@@ -87,6 +109,43 @@ public class RegisterActivity extends AppCompatActivity {
         String emailUtente = email.getText().toString();
         String passwordUtente = password.getText().toString();
         String confermaPasswordUtente = confermaPassword.getText().toString();
+
+        //metodo 2 trasformazione immagine in stringa
+
+       /* String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+        Bitmap bm = BitmapFactory.decodeFile("/path/to/image.jpg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
+        byte[] b = baos.toByteArray(); */
+
+
+
+
+        //metodo 1 trasformazione immagine in stringa
+       Bitmap bitmap1 = ((BitmapDrawable) aggiungiImmagine.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageInByte = baos.toByteArray();
+
+        //stringa finale da utilizzare
+        String encodedImage = Base64.encodeToString(imageInByte, Base64.NO_WRAP);
+
+
+
+
+
+       //modo per salvare i dati nel DB
+        /*if (nomeUtente.compareTo("")!= 0 && emailUtente.compareTo("")!=0 && passwordUtente.compareTo("")!=0 && confermaPasswordUtente.compareTo("")!=0 && encodedImage.compareTo("")!=0)
+        {
+            Utente utente = new Utente(nomeUtente, emailUtente, passwordUtente, confermaPasswordUtente, encodedImage);
+            myRef.child("Utenti").push().setValue(utente);
+        } */
+
+        //per ripulire i campi una volta che l'utente ha inserito i dati e dunque si impostano a vuoti
+        nome.setText("");
+        email.setText("");
+        password.setText("");
+        confermaPassword.setText("");
 
 
         Log.i(TAG, nomeUtente);
@@ -104,6 +163,8 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Occhio alle password", Toast.LENGTH_SHORT).show();
         else
             createFirebaseUser(emailUtente,passwordUtente,nomeUtente);
+
+
 
     }
 
@@ -131,6 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+
     }
 
     private void setNome(String nome) {
@@ -200,7 +262,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    //apertura dialog
+    //apertura dialog per caricamento foto
     private void start() {
         final CharSequence[] options = {"Scatta foto", "Scegli dalla galleria", "Annulla"};
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -232,6 +294,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_CAMERA) {
 
             Uri selectedImage = data.getData();
+
+
+
             bitmap = (Bitmap) data.getExtras().get("data");
             rotated_bitmap= RotateBitmap(bitmap,90);
             aggiungiImmagine.setImageBitmap(rotated_bitmap);
@@ -256,6 +321,7 @@ public class RegisterActivity extends AppCompatActivity {
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
+
 
 }
 
