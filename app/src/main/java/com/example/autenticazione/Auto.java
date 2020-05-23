@@ -1,10 +1,10 @@
 package com.example.autenticazione;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Auto implements Parcelable {
-    //public String image;
     public String licensePlate;
     public String model;
     public long id;
@@ -13,7 +13,6 @@ public class Auto implements Parcelable {
     public static class AutoMetaData {
         public static String ID = "_id";
         public static String LICENSEPLATE = "licensePlate";
-        //public static String IMAGE = "image";
         public static String MODEL = "model";
         public static String COLOR = "color";
         public static String TABLE_NAME = "Auto";
@@ -38,7 +37,6 @@ public class Auto implements Parcelable {
 
     private Auto(Parcel in) {
         id = in.readLong();
-        //image = in.readString();
         licensePlate = in.readString();
         model = in.readString();
         color = in.readString();
@@ -52,7 +50,6 @@ public class Auto implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        //dest.writeString(image);
         dest.writeString(licensePlate);
         dest.writeString(model);
         dest.writeString(color);

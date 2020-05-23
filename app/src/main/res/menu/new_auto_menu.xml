@@ -2,14 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/item1"
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/accept"
         android:title="Salva"
-        android:icon="@drawable/ok"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/item2"
+    <item
+        android:id="@+id/item2"
+        android:icon="@drawable/reject"
         android:title="Annulla"
-        android:icon="@drawable/cancel"
         app:showAsAction="ifRoom" />
 
 </menu>

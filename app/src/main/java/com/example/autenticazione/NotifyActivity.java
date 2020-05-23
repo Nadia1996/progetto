@@ -48,13 +48,14 @@ import java.util.Calendar;
 
 public class NotifyActivity extends AppCompatActivity {
     private static final String[] FROMS = new String[]{AutoMetaData.LICENSEPLATE,
-            AutoMetaData.MODEL, AutoMetaData.COLOR } ;
+            AutoMetaData.MODEL, AutoMetaData.COLOR} ;
     private static final int[] TOS = {R.id.tvLicensePlate, R.id.tvModel,
             R.id.tvColor} ;
     private static final int CREATE_ACTIVITY_RESULT = 1;
     private static final int DELETE_MENU_OPTION = 2;
     private static final int UPDATE_MENU_OPTION = 1;
     private static final int UPDATE_ACTIVITY_RESULT = 2;
+    private static final int NOTIFY_ACTIVITY = 4;
     private EditText etTime;
     private ImageView ivAuto;
     private ImageButton newTimeButton;
@@ -66,7 +67,7 @@ public class NotifyActivity extends AppCompatActivity {
     private Cursor cursor;
     private CursorAdapter adapter;
     private static final String TAG_LOG = "SQLite Auto" ;
-    private static final int DB_VERSION = 1 ;
+    private static final int DB_VERSION = 3 ;
     private ListView list;
 
     @Override
@@ -143,16 +144,16 @@ public class NotifyActivity extends AppCompatActivity {
         db.close();
     }
 
-    //creazione db
+    //creazione db: locato in View-Tool Windows-Device File Explorer-data-data-com.example.autenticaz - database
 
     private final SQLiteOpenHelper dbHelper = new SQLiteOpenHelper(this,
             "AUTO_DB", null, DB_VERSION) {
 
 
+
         @Override
         public void onCreate(SQLiteDatabase db) {
             Log.i(TAG_LOG, "Inizio Creazione DB");
-
             String sql = "";
             sql += "CREATE TABLE \"AUTO\" (";
             sql += "      \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT,";
@@ -162,20 +163,26 @@ public class NotifyActivity extends AppCompatActivity {
             sql += ")";
 
             db.execSQL(sql);
+            Log.i(TAG_LOG, "Creato db");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.i(TAG_LOG, "Aggiornamento non implementato");
+            /*
+            String sql = "";
+            sql += "DROP TABLE IF EXISTS \"AUTO\"";
+            db.execSQL(sql);
+            onCreate(db);
+
+             */
         }
+
 
     };
 
-
-
     private void updateListView() {
-        String sql = "SELECT _id, licensePlate, model, color FROM Auto";
-        cursor = db.rawQuery(sql, null);
+       String sql = "SELECT _id, licensePlate, model, color FROM Auto";
+       cursor = db.rawQuery(sql, null);
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();
     }
@@ -215,7 +222,6 @@ public class NotifyActivity extends AppCompatActivity {
                             .getColumnIndex(AutoMetaData.MODEL));
                     auto.color = tmpCursor.getString(tmpCursor
                             .getColumnIndex(AutoMetaData.COLOR));
-                    //auto.image = tmpCursor.getString(tmpCursor.getColumnIndex(AutoMetaData.IMAGE));
                     autoBundle.putParcelable("auto", auto);
                     updateIntent.putExtra("auto", autoBundle);
                     startActivityForResult(updateIntent, UPDATE_ACTIVITY_RESULT);

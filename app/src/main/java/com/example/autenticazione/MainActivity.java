@@ -19,7 +19,7 @@ public class MainActivity<ImageView> extends AppCompatActivity {
     private TextView tvCredito;
     private ImageView ivFind;
     private ImageView ivNotify;
-    private ImageView ivManageReservation;
+    private ImageView ivManage;
     private ImageView ivRemember;
 
 
@@ -36,7 +36,7 @@ public class MainActivity<ImageView> extends AppCompatActivity {
         //riferimenti a tutte le iv e le tv
         ivFind = (ImageView) findViewById(R.id.ivFind);
         ivNotify = (ImageView) findViewById(R.id.ivNotify);
-        ivManageReservation = (ImageView) findViewById(R.id.ivManageReservation);
+        ivManage = (ImageView) findViewById(R.id.ivManage);
         ivRemember = (ImageView) findViewById(R.id.ivRemember);
         tvCredito = (TextView) findViewById(R.id.tvCredito);
 

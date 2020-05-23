@@ -6,7 +6,11 @@
     <string name="tvIntroCredito">Il tuo credito è: </string>
     <string name="tUserSettingsActivity">Impostazioni </string>
     <string name="tEditProfileActivity">Modifica profilo </string>
-    <string name="tReservationsActivity">Le tue prenotazioni: </string>
+    <string name="tReservationsActivity">Le tue transazioni: </string>
+    <string name="myRequests">Le tue richieste </string>
+    <string name="requestsToMe">Le tue prenotazioni </string>
+    <string name="tvTimeText">Inserisci ora </string>
+    <string name="myAvailabilities">Le tue disponibilità </string>
     <string name="tNotifyActivity">Segnala parcheggio </string>
     <string name="tMapActivity">Esplora </string>
     <string name="tLoginActivity">Accedi </string>
@@ -22,11 +26,17 @@
     <string name="tvNotification">Gestisci notifiche</string>
     <string name="tvPermission">Gestisci permessi</string>
     <string name="sAlert">Avvisami quando il tempo sta per scadere</string>
-    <string name="sNotification">Avvisami quando ricevo una richiesta</string>
+    <string name="sNotification">Avvisami quando il mio posto viene prenotato</string>
     <string name="sNotificationAccept">Avvisami quando la mia richiesta viene accettata</string>
     <string name="tvAlert">Inserisci minuti di preavviso:</string>
     <string name="bSave">Salva modifiche</string>
+    <string name="title_activity_reservation">ReservationActivity</string>
+    <string name="tvNotificationReject">Avvisami quando la mia richiesta viene rifiutata</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

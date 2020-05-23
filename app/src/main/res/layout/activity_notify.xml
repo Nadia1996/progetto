@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <TextView
         android:id="@+id/tNotifyActivity"
@@ -78,13 +78,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.12" />
 
-    <ImageButton
-        android:id="@+id/newTimeButton"
+    <TextView
+        android:id="@+id/tvTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.205" />
+
+    <ImageButton
+        android:id="@+id/newTimeButton"
+        android:layout_width="70dp"
+        android:layout_height="63dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_bar"
         app:layout_constraintVertical_bias="0.192"
@@ -92,15 +104,15 @@
 
     <ImageButton
         android:id="@+id/ibNewAuto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="59dp"
+        android:layout_height="61dp"
         android:onClick="addNewAuto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintHorizontal_bias="0.713"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422"
+        app:layout_constraintVertical_bias="0.432"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

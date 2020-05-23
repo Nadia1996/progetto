@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Base64;
 import android.view.View.OnClickListener;
 import android.Manifest;
 import android.app.AlertDialog;
@@ -33,6 +37,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import android.view.MenuInflater;
@@ -60,7 +66,6 @@ public class NewAutoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_auto);
-        ivNewAutoImage = (ImageView) findViewById(R.id.ivNewAutoImage);
         etNewAutoLicensePlate = (EditText) findViewById(R.id.etNewAutoLicensePlate);
         etNewAutoColor = (EditText) findViewById(R.id.etNewAutoColor);
         etNewAutoModel = (EditText) findViewById(R.id.etNewAutoModel);
@@ -129,6 +134,7 @@ public class NewAutoActivity extends AppCompatActivity {
     }
 
     //apertura dialog
+
     public void start() {
         final CharSequence[] options = {"Scatta foto", "Scegli dalla galleria", "Annulla"};
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -153,6 +159,7 @@ public class NewAutoActivity extends AppCompatActivity {
     }
 
     //caricamento della foto scattata o caricata sulla schermata di registrazione
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,6 +188,30 @@ public class NewAutoActivity extends AppCompatActivity {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    //funzione per convertire bitmap in stringa
+
+    public static String bitmapToString(Bitmap b) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageInByte = baos.toByteArray();
+        String finalImage = new String((imageInByte));
+        return finalImage;
+    }
+
+    //funzione per convertire stringa in bitmap
+
+    public Bitmap stringToBitmap(String s){
+        try{
+            byte [] encodeByte = Base64.decode(s,Base64.DEFAULT);
+            Bitmap finalBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return finalBitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
 }

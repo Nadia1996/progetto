@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".NewAutoActivity"></activity>
+        <activity android:name=".NewAutoActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ReservationsActivity" />
         <activity android:name=".NotifyActivity" />
